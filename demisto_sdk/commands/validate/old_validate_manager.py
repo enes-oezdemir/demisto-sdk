@@ -22,6 +22,7 @@ from demisto_sdk.commands.common.constants import (
     IGNORED_PACK_NAMES,
     OLDEST_SUPPORTED_VERSION,
     PACKS_DIR,
+    MISC_DIR,
     PACKS_PACK_META_FILE_NAME,
     SKIP_RELEASE_NOTES_FOR_TYPES,
     VALIDATION_USING_GIT_IGNORABLE_DATA,
@@ -2637,6 +2638,11 @@ class OldValidateManager:
         """
 
         if PACKS_DIR not in file_path:
+            self.ignore_file(file_path)
+            return True
+
+        path_parts = Path(file_path).parts
+        if MISC_DIR in path_parts:
             self.ignore_file(file_path)
             return True
 
